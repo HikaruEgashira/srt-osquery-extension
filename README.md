@@ -159,33 +159,6 @@ journalctl --since "1 hour ago" | grep -i bubblewrap
 strace -f -e trace=all bwrap ... 2>&1 | grep EPERM
 ```
 
-## Use Cases
-
-### Security Monitoring
-```sql
--- Alert on SSH key access attempts
-SELECT * FROM sandbox_violations
-WHERE target_path LIKE '%/.ssh/%';
-```
-
-### Process Behavior Analysis
-```sql
--- Identify noisy processes
-SELECT process_name, COUNT(*) as violations
-FROM sandbox_violations
-GROUP BY process_name
-HAVING violations > 10;
-```
-
-### Compliance Auditing
-```sql
--- Track unauthorized file access
-SELECT timestamp, process_name, target_path
-FROM sandbox_violations
-WHERE operation LIKE '%file%'
-ORDER BY timestamp DESC;
-```
-
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
